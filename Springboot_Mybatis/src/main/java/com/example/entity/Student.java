@@ -25,7 +25,7 @@ public class Student {
 
     private Integer studentGender;
 
-    private Integer studentDepartmentId;
+    private Long studentDepartmentId;
 
 
 
