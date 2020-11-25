@@ -31,9 +31,8 @@ public class StudentVoController {
 
     @RequestMapping("/queryAll")
     public List<StudentVo> queryAll(){
-        List<Student> studentList = studentService.queryAll();
         List<StudentVo> studentVoList = new LinkedList<>();
-        for(Student s : studentList){
+        for(Student s : studentService.queryAll()){
             studentVoList.add(getVo(s));
         }
         return studentVoList;
@@ -48,9 +47,8 @@ public class StudentVoController {
 
     public StudentVo getVo(Student s){
         String departmentName = departmentService.queryById(s.getStudentDepartmentId()).getDepartmentName();
-        Date date = s.getStudentBirthday();
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        return new StudentVo(s.getStudentId(), s.getStudentName(), format.format(date), departmentName);
+        return new StudentVo(s.getStudentId(), s.getStudentName(), format.format(s.getStudentBirthday()), departmentName);
     }
 
 }
