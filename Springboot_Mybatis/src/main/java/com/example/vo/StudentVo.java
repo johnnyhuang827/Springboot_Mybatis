@@ -26,9 +26,15 @@ public class StudentVo {
 
     private String studentName;
 
+    private String studentGender;
+
+    private Long studentAge;
+
     private String studentBirthday;
 
     private String studentDepartment;
+
+
 
 
 }

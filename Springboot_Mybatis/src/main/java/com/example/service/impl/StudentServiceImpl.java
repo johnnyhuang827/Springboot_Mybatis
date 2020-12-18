@@ -3,10 +3,14 @@ package com.example.service.impl;
 import com.example.entity.Student;
 import com.example.mapper.StudentMapper;
 import com.example.service.StudentService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.data.redis.core.ValueOperations;
+import tk.mybatis.mapper.entity.Example;
+
 import java.util.concurrent.TimeUnit;
 
 import java.util.List;
@@ -98,4 +102,29 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> queryAll() {
         return studentMapper.selectAll();
     }
+
+    @Override
+    public PageInfo<Student> queryByPage(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        return new PageInfo<Student>(studentMapper.selectAll());
+    }
+
+    @Override
+    public List<Student> queryByDescOrder() {
+        Example example = new Example(Student.class);
+        example.orderBy("studentId").desc();
+        return studentMapper.selectByExample(example);
+    }
+
+
+    @Override
+    public List<Student> queryByOrder() {
+        Example example = new Example(Student.class);
+        example.orderBy("studentId");
+        return studentMapper.selectByExample(example);
+    }
+
+
+
+
 }

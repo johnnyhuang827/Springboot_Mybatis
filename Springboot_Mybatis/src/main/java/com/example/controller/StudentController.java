@@ -3,6 +3,7 @@ package com.example.controller;
 import com.example.ajax.AjaxResult;
 import com.example.entity.Student;
 import com.example.service.StudentService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,8 @@ import java.util.List;
 
 
 @RestController
+@CrossOrigin(origins = {"http://localhost:3000"},allowCredentials = "true",allowedHeaders = {"X-Custom-Header"},
+        maxAge = 3600L, methods={RequestMethod.GET,RequestMethod.POST,RequestMethod.HEAD})
 @RequestMapping("/student")
 public class StudentController {
 
@@ -31,15 +34,30 @@ public class StudentController {
                 return studentService.queryAll();
         }
 
+        @RequestMapping("queryByPage/{page}")
+        public PageInfo<Student> queryByPage(@PathVariable int page){
+                return studentService.queryByPage(page, 4);
+        }
+
+        @RequestMapping("/queryByDescOrder")
+        public List<Student> queryByDescOrder(){
+                return studentService.queryByDescOrder();
+        }
+
+        @RequestMapping("/queryByOrder")
+        public List<Student> queryByOrder(){
+                return studentService.queryByOrder();
+        }
+
         /**
          * 查
          * @param id
          * @return
          */
         @GetMapping("/{id}")
-        public AjaxResult getInfo(@PathVariable Long id)
+        public Student getInfo(@PathVariable Long id)
         {
-            return AjaxResult.success(studentService.selectStudentById(id));
+            return studentService.selectStudentById(id);
         }
 
 

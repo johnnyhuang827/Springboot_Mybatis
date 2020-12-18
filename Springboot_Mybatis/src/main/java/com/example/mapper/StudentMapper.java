@@ -36,5 +36,7 @@ public interface StudentMapper extends Mapper<Student>{
 //        @Select("select * from student_table")
 //        List<Student> queryAll();
 
+        @Select("select TIMESTAMPDIFF(YEAR,student_table.student_birthday,CURDATE()) as age from student_table where student_id = #{id}")
+        Long queryAge(Long id);
 
 }

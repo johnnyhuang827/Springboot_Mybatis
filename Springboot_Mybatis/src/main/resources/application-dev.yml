@@ -60,3 +60,10 @@ configuration:
   #另外一种打印语句的方式
   log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
+# pagehelper 配置
+pagehelper:
+  helperDialect: mysql
+  reasonable: true #开启优化，<1页返回第一页
+  supportMethodsArguments: true #是否支持接口参数来传递分页参数，默认false
+  pageSizeZero: false #pageSize=0 返回所有
+  params: count=countSql
